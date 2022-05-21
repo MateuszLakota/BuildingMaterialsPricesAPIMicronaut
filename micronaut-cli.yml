@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.lakota
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: maven
+features: [ annotation-api, app-name, http-client, jackson-databind, junit, kotlin, kotlin-application, logback, maven, mockito, netty-server, openapi, readme, shade, swagger-ui, yaml ]
