@@ -7,7 +7,6 @@ import kotlin.random.Random
 sealed class BuildingMaterialsProducer(lowerPriceThreshold: Double, upperPriceThreshold: Double) {
 
     abstract val product: Product
-    private fun priceGenerator() = Random(System.currentTimeMillis())
     private val weekdayToPrice = DayOfWeek
         .values()
         .associateWith { generatePrice(lowerPriceThreshold, upperPriceThreshold) }
@@ -18,6 +17,8 @@ sealed class BuildingMaterialsProducer(lowerPriceThreshold: Double, upperPriceTh
     private fun generatePrice(lowerBound: Double, upperBound: Double): BigDecimal {
         return priceGenerator().nextDouble(lowerBound, upperBound).toBigDecimal()
     }
+
+    private fun priceGenerator() = Random(System.currentTimeMillis())
 
     companion object {
         fun createProducer(
