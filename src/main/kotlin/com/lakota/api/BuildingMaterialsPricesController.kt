@@ -1,41 +1,32 @@
 package com.lakota.api
 
 import com.lakota.data.dto.BuildingMaterialsProducerDTO
-import com.lakota.service.BuildingMaterialsPricesService
-import io.micronaut.http.HttpResponseFactory
-import io.micronaut.http.HttpStatus
+import com.lakota.service.BuildingMaterialsPricingService
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.MutableHttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import java.math.BigDecimal
 
 @Controller
-class BuildingMaterialsPricesController {
+@Suppress("unused")
+class BuildingMaterialsPricesController(private val pricingService: BuildingMaterialsPricingService) {
 
     @Get("/cement")
-    fun getCement(): MutableHttpResponse<BuildingMaterialsProducerDTO>{
-        val price = BuildingMaterialsPricesService().getCementPrice().toString()
-        return responseWith<BuildingMaterialsProducerDTO>(HttpStatus.OK).body(BuildingMaterialsProducerDTO(price))
-    }
+    fun getCement(): HttpResponse<BuildingMaterialsProducerDTO> = pricingService.getCementPrice().toHttpResponse()
 
     @Get("/chippings")
-    fun getChippings(): MutableHttpResponse<BuildingMaterialsProducerDTO> {
-        val price = BuildingMaterialsPricesService().getChippingsPrice().toString()
-        return responseWith<BuildingMaterialsProducerDTO>(HttpStatus.OK).body(BuildingMaterialsProducerDTO(price))
-    }
+    fun getChippings(): MutableHttpResponse<BuildingMaterialsProducerDTO> =
+        pricingService.getChippingsPrice().toHttpResponse()
 
     @Get("/sand")
-    fun getSand(): MutableHttpResponse<BuildingMaterialsProducerDTO> {
-        val price = BuildingMaterialsPricesService().getSandPrice().toString()
-        return responseWith<BuildingMaterialsProducerDTO>(HttpStatus.OK).body(BuildingMaterialsProducerDTO(price))
-    }
+    fun getSand(): MutableHttpResponse<BuildingMaterialsProducerDTO> = pricingService.getSandPrice().toHttpResponse()
 
     @Get("/water")
     fun getWater(): MutableHttpResponse<BuildingMaterialsProducerDTO> {
-        val price = BuildingMaterialsPricesService().getWaterPrice().toString()
-        return responseWith<BuildingMaterialsProducerDTO>(HttpStatus.OK).body(BuildingMaterialsProducerDTO(price))
+        return pricingService.getWaterPrice().toHttpResponse()
     }
 
-    private fun <R> responseWith(status: HttpStatus): MutableHttpResponse<R> {
-        return HttpResponseFactory.INSTANCE.status(status)
-    }
+    private fun BigDecimal.toHttpResponse() = HttpResponse.ok<BuildingMaterialsProducerDTO?>()
+        .body(BuildingMaterialsProducerDTO(this))
 }

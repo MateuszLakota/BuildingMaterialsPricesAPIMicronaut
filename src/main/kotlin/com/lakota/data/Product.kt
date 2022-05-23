@@ -1,5 +1,5 @@
 package com.lakota.data
 
-enum class ProducersTypes {
+enum class Product {
     CEMENT, CHIPPINGS, SAND, WATER
 }
