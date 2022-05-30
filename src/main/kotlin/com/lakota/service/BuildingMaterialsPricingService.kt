@@ -23,7 +23,7 @@ class BuildingMaterialsPricingService {
 
     fun getWaterPrice(): BigDecimal = getProductPrice(Product.WATER)
 
-    private fun getProductPrice(product: Product): BigDecimal = producers[product]?.getPrice(getWeekday())
+    private fun getProductPrice(product: Product): BigDecimal = producers[product]?.getPrice(getWeekday())?.setScale(2)
         ?: throw IllegalStateException("Unable to get price for $product")
 
     private fun getWeekday() = LocalDate.now().dayOfWeek
