@@ -21,7 +21,7 @@ class BuildingMaterialsPricesControllerTest {
     private val expectedReason: String = "OK"
 
     @Test
-    fun testApplicationWorks() {
+    fun testIsApplicationWorking() {
         // Given and when
         val applicationStatus = application.isRunning
         // Then
